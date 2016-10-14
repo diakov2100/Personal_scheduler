@@ -28,7 +28,11 @@ namespace PersonalScheduler
 			// to produce a single DateTime? (nullable DateTime) object. Check that it
 			// is not null before creating a new event
 			var date = GetDateTime();
-
+            if (date != null)
+            {
+                
+               // new ScheduledEvent(textBoxName, date, textBoxDescription, textBoxPlace, { Notifications.day })
+            }
 			// Create a new scheduled event or regular event here and add it to the event manager
 
 			// Event data is inside the following UI controls:

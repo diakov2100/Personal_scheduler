@@ -22,15 +22,17 @@ namespace PersonalScheduler
 
 			_eventManager = new EventManager();
 
-			// Assign event handlers here, so that event listbox is kept in sync
-			// with the list inside _eventManager
+            // Assign event handlers here, so that event listbox is kept in sync
+            // with the list inside _eventManager
+            _eventManager.OnEventAdded += e => listBoxEvents.Items.Add(e);
+            _eventManager.OnEventRemoved += e => listBoxEvents.Items.Remove(e);
 
 
-			//
+            //
 
-			// The following function initializes a one-second regular timer, the handler will
-			// call _eventManager.ProcessEvents - check template code below
-			SetupTimer();
+            // The following function initializes a one-second regular timer, the handler will
+            // call _eventManager.ProcessEvents - check template code below
+            SetupTimer();
 		}
 
 		#region TemplateCode
