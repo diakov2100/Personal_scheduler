@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Windows;
 
@@ -30,8 +31,21 @@ namespace PersonalScheduler
 			var date = GetDateTime();
             if (date != null)
             {
-                
-               // new ScheduledEvent(textBoxName, date, textBoxDescription, textBoxPlace, { Notifications.day })
+                List<NotificationType> Lis = new List<NotificationType>();
+                if (checkBoxSound.IsChecked==true)
+                {
+                    Lis.Add(NotificationType.Sound);
+                }
+                if (checkBoxVisual.IsChecked == true)
+                {
+                    Lis.Add(NotificationType.Visual);
+                }
+                if (checkBoxEmail.IsChecked == true)
+                {
+                    Lis.Add(NotificationType.Email);
+                }
+
+               _eventManager.AddEvent(new ScheduledEvent(textBoxName.Text, date.Value, textBoxDescription.Text, textBoxPlace.Text, Lis));
             }
 			// Create a new scheduled event or regular event here and add it to the event manager
 

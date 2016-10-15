@@ -2,8 +2,8 @@
 
 namespace PersonalScheduler.Notifiers
 {
-	class VisualNotifier
-	{
+	class VisualNotifier : INotifier
+    {
 		public void Notify(ScheduledEvent ev)
 		{
 			MessageBox.Show("Sample message");

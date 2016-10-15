@@ -49,7 +49,7 @@ namespace PersonalScheduler
             }
             private set
             {
-                if ((value != null) && (DateTime >= DateTime.Now))
+                if ((value != null))
                 {
                     datetime = value;
                 }
@@ -66,7 +66,7 @@ namespace PersonalScheduler
                 return description;
             }
             private set
-            {                
+            {
                 description = value;
             }
         }
@@ -78,7 +78,7 @@ namespace PersonalScheduler
             }
             private set
             {
-               place = value;
+                place = value;
             }
         }
         public List<NotificationType> Notifications
