@@ -17,3 +17,5 @@ C:\Users\Максим\Documents\GitHub\HW2 c#\Personal_scheduler\PersonalSchedul
 C:\Users\Максим\Documents\GitHub\HW2 c#\Personal_scheduler\PersonalScheduler\PersonalScheduler\obj\Debug\PersonalScheduler.csproj.GenerateResource.Cache
 C:\Users\Максим\Documents\GitHub\HW2 c#\Personal_scheduler\PersonalScheduler\PersonalScheduler\obj\Debug\PersonalScheduler.exe
 C:\Users\Максим\Documents\GitHub\HW2 c#\Personal_scheduler\PersonalScheduler\PersonalScheduler\obj\Debug\PersonalScheduler.pdb
+C:\Users\Максим\Documents\GitHub\HW2 C#\Personal_scheduler\PersonalScheduler\PersonalScheduler\obj\Debug\VisualNotifierWindow.g.cs
+C:\Users\Максим\Documents\GitHub\HW2 C#\Personal_scheduler\PersonalScheduler\PersonalScheduler\obj\Debug\VisualNotifierWindow.baml

@@ -13,11 +13,11 @@ namespace PersonalScheduler
 
     public class ScheduledEvent
     {
-        private string name;
-        private DateTime datetime;
-        private string description;
-        private string place;
-        private List<NotificationType> notifications;
+        protected string name;
+        protected DateTime datetime;
+        protected string description;
+        protected string place;
+        protected List<NotificationType> notifications;
         public string Name
         {
             get
@@ -25,7 +25,7 @@ namespace PersonalScheduler
                 return name;
             }
 
-            private set
+            protected set
             {
                 if ((value != null) && (value != "") && (value.Count(c => c == ' ') != value.Length))
                 {
@@ -47,7 +47,7 @@ namespace PersonalScheduler
             {
                 return datetime;
             }
-            private set
+            protected set
             {
                 if ((value != null))
                 {
@@ -65,7 +65,7 @@ namespace PersonalScheduler
             {
                 return description;
             }
-            private set
+            protected set
             {
                 description = value;
             }
@@ -76,7 +76,7 @@ namespace PersonalScheduler
             {
                 return place;
             }
-            private set
+            protected set
             {
                 place = value;
             }
@@ -87,7 +87,7 @@ namespace PersonalScheduler
             {
                 return notifications;
             }
-            private set
+            protected set
             {
                 if (value.Count < 1)
                 {
@@ -108,4 +108,5 @@ namespace PersonalScheduler
             this.Notifications = Notifications;
         }
     }
+
 }

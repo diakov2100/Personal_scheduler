@@ -2,7 +2,7 @@
 {
 	class SoundNotifier : INotifier
     {
-		public void Notify(ScheduledEvent e) 
+		public void Notify(ScheduledEvent ev) 
 		{
 			System.Media.SystemSounds.Exclamation.Play();
 		}

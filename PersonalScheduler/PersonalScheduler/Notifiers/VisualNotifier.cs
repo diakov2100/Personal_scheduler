@@ -6,7 +6,9 @@ namespace PersonalScheduler.Notifiers
     {
 		public void Notify(ScheduledEvent ev)
 		{
-			MessageBox.Show("Sample message");
-		}
+            VisualNotifierWindow notifierWindow = new VisualNotifierWindow(ev);
+            notifierWindow.ShowDialog();
+
+        }
 	}
 }

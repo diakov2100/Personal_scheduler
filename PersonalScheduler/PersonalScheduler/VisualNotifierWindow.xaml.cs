@@ -17,11 +17,14 @@ namespace PersonalScheduler
     /// <summary>
     /// Логика взаимодействия для VisualNotifier.xaml
     /// </summary>
-    public partial class VisualNotifier : Window
+    public partial class VisualNotifierWindow : Window
     {
-        public VisualNotifier()
+        public VisualNotifierWindow(ScheduledEvent ev)
         {
             InitializeComponent();
+            EventName.Text = ev.Name;
+            EventPlace.Text = ev.Place;
+            EventDescription.Text = ev.Description;
         }
     }
 }
