@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace PersonalScheduler
 {
@@ -15,35 +16,39 @@ namespace PersonalScheduler
         Notifiers.VisualNotifier Visual = new Notifiers.VisualNotifier();
         private List<ScheduledEvent> Listofevents { get { return listofevents; } set { listofevents = value; listofevents.Sort((x, y) => x.DateTime.CompareTo(y.DateTime)); } }
 
+
         public void ProcessEvents()
         {
-            if (listofevents.Count != 0)
+            while ((listofevents.Count != 0) && (listofevents[0].DateTime <= DateTime.Now))
             {
-                int i = 0;
-                while ((i<listofevents.Count) && (listofevents[i].DateTime<=DateTime.Now))
-                { 
-                    foreach (var Notification in listofevents[i].Notifications)
+                foreach (var Notification in listofevents[0].Notifications)
+                {
+                    if (Notification == NotificationType.Email)
                     {
-                        if (Notification == NotificationType.Email)
-                        {
 
-                        }
-                        if (Notification == NotificationType.Sound)
-                        {
-                            Sound.Notify(listofevents[i]);
-                        }
-                        if (Notification == NotificationType.Visual)
-                        {
-                            Visual.Notify(listofevents[i]);
-                        }
                     }
+                    if (Notification == NotificationType.Sound)
+                    {
+                        Sound.Notify(listofevents[0]);
+                    }
+                    if (Notification == NotificationType.Visual)
+                    {
+                        Visual.Notify(listofevents[0]);
+                    }
+                }
+                if (listofevents[0] is RegularEvent)
+                {
                     var ev = listofevents[0] as RegularEvent;
-                    RemoveEvent(listofevents[i]);
-                    i++;
+                    RemoveEvent(listofevents[0]);
+                    AddEvent(new ScheduledEvent(ev.Name, ev.DateTime + ev.RepeatInterval, ev.Place, ev.Description, ev.Notifications));
+                }
+                else
+                {
+                    RemoveEvent(listofevents[0]);
                 }
             }
-        }
 
+        }
 
         public void AddEvent(ScheduledEvent ev)
         {
