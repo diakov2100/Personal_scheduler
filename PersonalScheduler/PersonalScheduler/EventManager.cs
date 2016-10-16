@@ -14,6 +14,7 @@ namespace PersonalScheduler
         List<ScheduledEvent> listofevents = new List<ScheduledEvent>();
         Notifiers.SoundNotifier Sound = new Notifiers.SoundNotifier();
         Notifiers.VisualNotifier Visual = new Notifiers.VisualNotifier();
+        Notifiers.EmailNotifier Email = new Notifiers.EmailNotifier();
         private List<ScheduledEvent> Listofevents { get { return listofevents; } set { listofevents = value; listofevents.Sort((x, y) => x.DateTime.CompareTo(y.DateTime)); } }
 
 
@@ -25,7 +26,7 @@ namespace PersonalScheduler
                 {
                     if (Notification == NotificationType.Email)
                     {
-
+                        Email.Notify(listofevents[0]);   
                     }
                     if (Notification == NotificationType.Sound)
                     {
