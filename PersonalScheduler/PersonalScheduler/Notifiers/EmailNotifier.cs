@@ -17,11 +17,11 @@ namespace PersonalScheduler.Notifiers
 
     class EmailNotifier : INotifier
     {
-        private string[] Scopes = { GmailService.Scope.GmailSend, GmailService.Scope.GmailLabels, GmailService.Scope.GmailModify };
-        private string ApplicationName = "Gmail API .NET Quickstart";
+        private string[] Scopes = { GmailService.Scope.GmailSend, GmailService.Scope.GmailReadonly};
+        private string ApplicationName = "PersonalSchelduer";
 
         private GmailService service;
-
+        private string mail;
 
         public EmailNotifier()
         {
@@ -48,6 +48,9 @@ namespace PersonalScheduler.Notifiers
             });
 
 
+            mail = service.Users.GetProfile("me").Execute().EmailAddress;
+
+
         }
         private string Base64UrlEncode(string input)
         {
@@ -59,21 +62,20 @@ namespace PersonalScheduler.Notifiers
         }
         public void Notify(ScheduledEvent ev)
         {
-            try
-            {
-                string text = string.Format(
+
+            string text = string.Format(
 @"{0},
 Description: 
 {1}
 Place:
 {2}", ev.Name, ev.Description, ev.Place);
-                var msg = new AE.Net.Mail.MailMessage
-                {
-                    Subject = "Notification",
-                    Body = text,
-                From = new MailAddress("me")
-                };
-            msg.To.Add(new MailAddress("me"));
+            var msg = new AE.Net.Mail.MailMessage
+            {
+                Subject = "Notification",
+                Body = text,
+                From = new MailAddress(mail)
+            };
+            msg.To.Add(new MailAddress(mail));
             msg.ReplyTo.Add(msg.From);
             var msgStr = new StringWriter();
             msg.Save(msgStr);
@@ -83,14 +85,10 @@ Place:
             {
                 Raw = Base64UrlEncode(msgStr.ToString())
             }, "me").Execute();
-        }
-            catch
-            {
 
-            }
         }
 
-}
+    }
 }
 
 
