@@ -17,7 +17,7 @@ namespace PersonalScheduler.Notifiers
 
     class EmailNotifier : INotifier
     {
-        private string[] Scopes = { GmailService.Scope.GmailSend, GmailService.Scope.GmailReadonly};
+        private string[] Scopes = { GmailService.Scope.GmailSend, GmailService.Scope.GmailReadonly };
         private string ApplicationName = "PersonalSchelduer";
 
         private GmailService service;
@@ -30,7 +30,7 @@ namespace PersonalScheduler.Notifiers
                 new FileStream("Notifiers/client_secret.json", FileMode.Open, FileAccess.Read))
             {
                 string credPath = System.Environment.GetFolderPath(
-                    System.Environment.SpecialFolder.Personal);
+                   System.Environment.SpecialFolder.Personal);
                 credPath = Path.Combine(credPath, ".credentials/gmail-dotnet-quickstart.json");
 
                 credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
@@ -86,6 +86,13 @@ Place:
                 Raw = Base64UrlEncode(msgStr.ToString())
             }, "me").Execute();
 
+        }
+        public void DeleteAuth()
+        {
+            string credPath = System.Environment.GetFolderPath(
+                   System.Environment.SpecialFolder.Personal);
+            credPath = Path.Combine(credPath, ".credentials");
+            Directory.Delete(credPath, true);         
         }
 
     }

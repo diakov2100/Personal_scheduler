@@ -11,9 +11,9 @@
         <Label x:Name="NameLabel" Content="Name" Margin="90,10,0,0" Height="26" VerticalAlignment="Top" HorizontalAlignment="Left" Width="42"/>
         <Label x:Name="PlaceLabel" Content="Place" Margin="90,35,0,0" Height="26" VerticalAlignment="Top" HorizontalAlignment="Left" Width="42"/>
         <Label x:Name="Description" Content="Description" Margin="89,61,89,59" HorizontalContentAlignment="Center"/>
-        <TextBox x:Name="EventDescription" Margin="10,87,0,10" IsReadOnly="True" HorizontalAlignment="Left" Width="274" />
-        <TextBox x:Name="EventName" HorizontalAlignment="Left" Height="26" Margin="135,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" VerticalContentAlignment="Center" IsReadOnly="True"/>
-        <TextBox x:Name="EventPlace" HorizontalAlignment="Left" Height="26" Margin="135,35,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" VerticalContentAlignment="Center" IsReadOnly="True"/>
+        <TextBox x:Name="EventDescription" Margin="10,87,10,10" IsReadOnly="True" />
+        <TextBox x:Name="EventName" HorizontalAlignment="Left" Margin="135,10,0,110" TextWrapping="Wrap" Width="120" VerticalContentAlignment="Center" IsReadOnly="True"/>
+        <TextBox x:Name="EventPlace" Margin="135,35,39,85" TextWrapping="Wrap" VerticalContentAlignment="Center" IsReadOnly="True"/>
 
     </Grid>
 </Window>

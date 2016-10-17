@@ -31,44 +31,83 @@ namespace PersonalScheduler
             var date = GetDateTime();
             if (date != null)
             {
-                List<NotificationType> Lis = new List<NotificationType>();
-                if (checkBoxSound.IsChecked == true)
+                try
                 {
-                    Lis.Add(NotificationType.Sound);
-                }
-                if (checkBoxVisual.IsChecked == true)
-                {
-                    Lis.Add(NotificationType.Visual);
-                }
-                if (checkBoxEmail.IsChecked == true)
-                {
-                    Lis.Add(NotificationType.Email);
-                }
-                if (checkBoxRepeat.IsChecked != true)
-                    _eventManager.AddEvent(new ScheduledEvent(textBoxName.Text, date.Value, textBoxDescription.Text, textBoxPlace.Text, Lis));
-                else
-                {
-                    switch (comboBoxUnits.SelectedIndex)
+                    List<NotificationType> Lis = new List<NotificationType>();
+                    if (checkBoxSound.IsChecked == true)
                     {
-                        case 0:
-                            _eventManager.AddEvent(new RegularEvent(new TimeSpan(0, Convert.ToInt32(textBoxRepeat.Text), 0), textBoxName.Text, date.Value, textBoxDescription.Text, textBoxPlace.Text, Lis));
-                            break;
-                        case 1:
-                            _eventManager.AddEvent(new RegularEvent(new TimeSpan(Convert.ToInt32(textBoxRepeat.Text), 0, 0), textBoxName.Text, date.Value, textBoxDescription.Text, textBoxPlace.Text, Lis));
-                            break;
-                        case 2:
-                            _eventManager.AddEvent(new RegularEvent(new TimeSpan(Convert.ToInt32(textBoxRepeat.Text), 0, 0, 0), textBoxName.Text, date.Value, textBoxDescription.Text, textBoxPlace.Text, Lis));
-                            break;
+                        Lis.Add(NotificationType.Sound);
+                    }
+                    if (checkBoxVisual.IsChecked == true)
+                    {
+                        Lis.Add(NotificationType.Visual);
+                    }
+                    if (checkBoxEmail.IsChecked == true)
+                    {
+                        Lis.Add(NotificationType.Email);
+                    }
+                    if (checkBoxRepeat.IsChecked != true)
+                        _eventManager.AddEvent(new ScheduledEvent(textBoxName.Text, date.Value, textBoxDescription.Text, textBoxPlace.Text, Lis));
+                    else
+                    {
+                        int a;
+                        if (!int.TryParse(textBoxRepeat.Text, out a))
+                        {
+                            throw new ArgumentException("Repeate time should be positive integer");
+                        }
+                        switch (comboBoxUnits.SelectedIndex)
+                        {
+                            case 0:
+                                _eventManager.AddEvent(new RegularEvent(new TimeSpan(0, Convert.ToInt32(textBoxRepeat.Text), 0), textBoxName.Text, date.Value, textBoxDescription.Text, textBoxPlace.Text, Lis));
+                                break;
+                            case 1:
+                                _eventManager.AddEvent(new RegularEvent(new TimeSpan(Convert.ToInt32(textBoxRepeat.Text), 0, 0), textBoxName.Text, date.Value, textBoxDescription.Text, textBoxPlace.Text, Lis));
+                                break;
+                            case 2:
+                                _eventManager.AddEvent(new RegularEvent(new TimeSpan(Convert.ToInt32(textBoxRepeat.Text), 0, 0, 0), textBoxName.Text, date.Value, textBoxDescription.Text, textBoxPlace.Text, Lis));
+                                break;
+                        }
+                    }
+                    DialogResult = true;
+                }
+                catch (Exception exeption)
+                {
+                    MessageBoxResult result = System.Windows.MessageBox.Show(
+                        @"" + exeption.Message + "/n"
+                        + "Retry?/n"
+                        + "Press No if you don't need to add event", "Authentication error", MessageBoxButton.YesNo, MessageBoxImage.Error);
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        switch (exeption.Message)
+                        {
+                            case "Name cannot be set as an empty string or a string of whitespaces.":
+                                textBoxName.Text = "";
+                                break;
+                            case "Name cannot be set as null.":
+                                textBoxName.Text = "";
+                                break;
+                            case "13":
+                                textBoxTime.Text= _previousTimeValue;
+                                datePicker.SelectedDate = DateTime.Now.Date.AddDays(1);
+                                break;
+                            case "Minimum one notification should be selected.":
+                                break;
+                            case "Repeate time should be positive integer":
+                                textBoxRepeat.Text = "";
+                                break;
+                            
+
+                        }
+                    }
+                    else
+                    {
+                        DialogResult = true;
                     }
                 }
+
             }
-            // Create a new scheduled event or regular event here and add it to the event manager
 
-            // Event data is inside the following UI controls:
-            // textBoxName, textBoxDescription, textBoxPlace, checkBoxVisual, checkBoxSound,
-            // checkBoxEmail, checkBoxRepeat, textBoxRepeat, comboBoxUnits
 
-            DialogResult = true;
         }
 
         #region Template code - don't change it

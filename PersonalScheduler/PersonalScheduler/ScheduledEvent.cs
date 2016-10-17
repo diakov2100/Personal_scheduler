@@ -33,11 +33,11 @@ namespace PersonalScheduler
                 }
                 else if ((value == "") && (value.Count(c => c == ' ') == value.Length))
                 {
-                    throw new ArgumentException();
+                    throw new ArgumentException("Name cannot be set as an empty string or a string of whitespaces.");
                 }
                 else
                 {
-                    throw new ArgumentNullException();
+                    throw new ArgumentNullException("Name cannot be set as null.");
                 }
             }
         }
@@ -49,13 +49,17 @@ namespace PersonalScheduler
             }
             protected set
             {
-                if ((value != null))
+                if (value == null)
                 {
-                    datetime = value;
+                    throw new ArgumentOutOfRangeException("DateTime cannot be set as null.");
+                }
+                else if (value <DateTime.Now)
+                {
+                    throw new ArgumentOutOfRangeException("DateTime cannot be earlier than the current moment.");
                 }
                 else
                 {
-                    throw new ArgumentOutOfRangeException("");
+                    datetime = value;
                 }
             }
         }
@@ -91,7 +95,7 @@ namespace PersonalScheduler
             {
                 if (value.Count < 1)
                 {
-                    throw new ArgumentException();
+                    throw new ArgumentException("Minimum one notification should be selected.");
                 }
                 else
                 {

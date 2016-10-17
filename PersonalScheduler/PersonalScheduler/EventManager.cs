@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
+
 namespace PersonalScheduler
 {
     public class EventManager
@@ -14,7 +15,7 @@ namespace PersonalScheduler
         List<ScheduledEvent> listofevents = new List<ScheduledEvent>();
         Notifiers.SoundNotifier Sound = new Notifiers.SoundNotifier();
         Notifiers.VisualNotifier Visual = new Notifiers.VisualNotifier();
-        Notifiers.EmailNotifier Email = new Notifiers.EmailNotifier();
+        Notifiers.EmailNotifier Email;
         private List<ScheduledEvent> Listofevents { get { return listofevents; } set { listofevents = value; listofevents.Sort((x, y) => x.DateTime.CompareTo(y.DateTime)); } }
 
 
@@ -24,9 +25,10 @@ namespace PersonalScheduler
             {
                 foreach (var Notification in listofevents[0].Notifications)
                 {
-                    if (Notification == NotificationType.Email)
+                    if ((Notification == NotificationType.Email) && (Email!=null))
                     {
-                        Email.Notify(listofevents[0]);   
+
+                        Email.Notify(listofevents[0]);
                     }
                     if (Notification == NotificationType.Sound)
                     {
@@ -55,6 +57,25 @@ namespace PersonalScheduler
         {
             if (!listofevents.Any(item => item.Name == ev.Name))
             {
+                if ((Email == null) && (ev.Notifications.Contains(NotificationType.Email)))
+                {
+
+                    try
+                    {
+                        Email = new Notifiers.EmailNotifier();
+                    }
+                    catch
+                    {
+                        MessageBoxResult result = System.Windows.MessageBox.Show(@"Retry?
+Press No if you don't need Email Noptification", "Authentication error", MessageBoxButton.YesNo, MessageBoxImage.Error);
+                        if (result == MessageBoxResult.Yes)
+                        {
+                            Email = null;
+                            Email = new Notifiers.EmailNotifier();
+                        };
+                    }
+
+                }
                 Listofevents.Add(ev);
                 OnEventAdded?.Invoke(ev);
             }

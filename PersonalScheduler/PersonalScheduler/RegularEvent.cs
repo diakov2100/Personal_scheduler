@@ -16,10 +16,10 @@ namespace PersonalScheduler
             {
                 if ((notifications.Contains(NotificationType.Email)) && (value.Minutes<5))
                 {
-                    throw new ArgumentException();
+                    throw new ArgumentException("If you use Email notification, repeate interval cannot be less then 5 minutes.");
                 }
                 else
-                {
+                {                    
                     repeatInterval = value;
                 }
             }
