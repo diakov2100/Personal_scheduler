@@ -70,24 +70,24 @@ namespace PersonalScheduler
                     }
                     DialogResult = true;
                 }
-                catch (Exception exeption)
+                catch (Exception exception)
                 {
                     string text;
-                    if (exeption is ArgumentOutOfRangeException)
+                    if (exception is ArgumentOutOfRangeException)
                     {
-                        text = (exeption as ArgumentOutOfRangeException).ParamName;
+                        text = (exception as ArgumentOutOfRangeException).ParamName;
                         datePicker.SelectedDate = DateTime.Now.Date.AddDays(1);
                         textBoxTime.Text = _previousTimeValue;
                     }
                     else
                     {
-                        text = exeption.Message;
+                        text = exception.Message;
                     }
                     MessageBoxResult result = System.Windows.MessageBox.Show(String.Join(Environment.NewLine, text, "Retry?",
-                        "Press No if you don't need to add event"), "Authentication error", MessageBoxButton.YesNo, MessageBoxImage.Error);
+                        "Press No if you don't need to add event"), exception.GetType().ToString().Substring(7), MessageBoxButton.YesNo, MessageBoxImage.Error);
                     if (result == MessageBoxResult.Yes)
                     {
-                        switch (exeption.Message)
+                        switch (exception.Message)
                         {
                             case "Name cannot be set as an empty string or a string of whitespaces.":
                                 textBoxName.Text = "";
@@ -98,13 +98,20 @@ namespace PersonalScheduler
                             case "Repeate time should be positive integer":
                                 textBoxRepeat.Text = "";
                                 break;
-                        }
+                            case "The event witn such method had been already added":
+                                textBoxName.Text = "";
+                                break;
+    }
                     }
                     else
                     {
                         DialogResult = false;
                     }
                 }
+            }
+            else
+            {
+                MessageBox.Show("Не удалось установить время");
             }
         }
 

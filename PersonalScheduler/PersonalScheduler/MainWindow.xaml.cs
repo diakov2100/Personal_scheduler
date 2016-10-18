@@ -24,7 +24,6 @@ namespace PersonalScheduler
 
             // Assign event handlers here, so that event listbox is kept in sync
             // with the list inside _eventManager
-
             _eventManager.OnEventAdded += e =>
             {
                 int number = 0;
@@ -41,6 +40,7 @@ namespace PersonalScheduler
                 listBoxEvents.Items.Insert(number, e);
             };
             _eventManager.OnEventRemoved += e => listBoxEvents.Items.Remove(e);
+
 
 
             //

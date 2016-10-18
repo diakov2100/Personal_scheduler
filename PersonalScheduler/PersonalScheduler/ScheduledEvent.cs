@@ -27,17 +27,17 @@ namespace PersonalScheduler
 
             protected set
             {
-                if ((value != null) && (value != "") && (value.Count(c => c == ' ') != value.Length))
+                if (value == null)
                 {
-                    name = value;
+                    throw new ArgumentNullException("Name cannot be set as null.");
                 }
                 else if ((value == "") && (value.Count(c => c == ' ') == value.Length))
                 {
                     throw new ArgumentException("Name cannot be set as an empty string or a string of whitespaces.");
                 }
-                else
+                else 
                 {
-                    throw new ArgumentNullException("Name cannot be set as null.");
+                    name = value;
                 }
             }
         }
