@@ -72,10 +72,19 @@ namespace PersonalScheduler
                 }
                 catch (Exception exeption)
                 {
-                    MessageBoxResult result = System.Windows.MessageBox.Show(
-                        @"" + exeption.Message + "/n"
-                        + "Retry?/n"
-                        + "Press No if you don't need to add event", "Authentication error", MessageBoxButton.YesNo, MessageBoxImage.Error);
+                    string text;
+                    if (exeption is ArgumentOutOfRangeException)
+                    {
+                        text = (exeption as ArgumentOutOfRangeException).ParamName;
+                        datePicker.SelectedDate = DateTime.Now.Date.AddDays(1);
+                        textBoxTime.Text = _previousTimeValue;
+                    }
+                    else
+                    {
+                        text = exeption.Message;
+                    }
+                    MessageBoxResult result = System.Windows.MessageBox.Show(String.Join(Environment.NewLine, text, "Retry?",
+                        "Press No if you don't need to add event"), "Authentication error", MessageBoxButton.YesNo, MessageBoxImage.Error);
                     if (result == MessageBoxResult.Yes)
                     {
                         switch (exeption.Message)
@@ -86,28 +95,17 @@ namespace PersonalScheduler
                             case "Name cannot be set as null.":
                                 textBoxName.Text = "";
                                 break;
-                            case "13":
-                                textBoxTime.Text= _previousTimeValue;
-                                datePicker.SelectedDate = DateTime.Now.Date.AddDays(1);
-                                break;
-                            case "Minimum one notification should be selected.":
-                                break;
                             case "Repeate time should be positive integer":
                                 textBoxRepeat.Text = "";
                                 break;
-                            
-
                         }
                     }
                     else
                     {
-                        DialogResult = true;
+                        DialogResult = false;
                     }
                 }
-
             }
-
-
         }
 
         #region Template code - don't change it

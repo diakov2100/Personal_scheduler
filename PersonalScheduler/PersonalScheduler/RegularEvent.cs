@@ -14,7 +14,7 @@ namespace PersonalScheduler
             get { return repeatInterval; }
             private set
             {
-                if ((notifications.Contains(NotificationType.Email)) && (value.Minutes<5))
+                if ((notifications.Contains(NotificationType.Email)) && (value.TotalMinutes<5))
                 {
                     throw new ArgumentException("If you use Email notification, repeate interval cannot be less then 5 minutes.");
                 }

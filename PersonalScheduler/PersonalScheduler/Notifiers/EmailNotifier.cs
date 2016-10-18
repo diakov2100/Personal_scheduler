@@ -29,9 +29,7 @@ namespace PersonalScheduler.Notifiers
             using (var stream =
                 new FileStream("Notifiers/client_secret.json", FileMode.Open, FileAccess.Read))
             {
-                string credPath = System.Environment.GetFolderPath(
-                   System.Environment.SpecialFolder.Personal);
-                credPath = Path.Combine(credPath, ".credentials/gmail-dotnet-quickstart.json");
+                string credPath = ".credentials/gmail-dotnet-user.json";
 
                 credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
                     GoogleClientSecrets.Load(stream).Secrets,
@@ -62,13 +60,15 @@ namespace PersonalScheduler.Notifiers
         }
         public void Notify(ScheduledEvent ev)
         {
-
-            string text = string.Format(
-@"{0},
-Description: 
-{1}
-Place:
-{2}", ev.Name, ev.Description, ev.Place);
+            string text = String.Join(Environment.NewLine, "It's time for " + ev.Name);
+            if (ev.Description != null)
+            {
+                text = String.Join(Environment.NewLine, text, "Description:", ev.Description);
+            }
+            if (ev.Description != null)
+            {
+                text = String.Join(Environment.NewLine, text, "Place:", ev.Place);
+            }
             var msg = new AE.Net.Mail.MailMessage
             {
                 Subject = "Notification",
@@ -87,14 +87,6 @@ Place:
             }, "me").Execute();
 
         }
-        public void DeleteAuth()
-        {
-            string credPath = System.Environment.GetFolderPath(
-                   System.Environment.SpecialFolder.Personal);
-            credPath = Path.Combine(credPath, ".credentials");
-            Directory.Delete(credPath, true);         
-        }
-
     }
 }
 

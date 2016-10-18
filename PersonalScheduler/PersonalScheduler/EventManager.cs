@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,7 +28,6 @@ namespace PersonalScheduler
                 {
                     if ((Notification == NotificationType.Email) && (Email!=null))
                     {
-
                         Email.Notify(listofevents[0]);
                     }
                     if (Notification == NotificationType.Sound)
@@ -66,11 +66,14 @@ namespace PersonalScheduler
                     }
                     catch
                     {
-                        MessageBoxResult result = System.Windows.MessageBox.Show(@"Retry?
-Press No if you don't need Email Noptification", "Authentication error", MessageBoxButton.YesNo, MessageBoxImage.Error);
+                        MessageBoxResult result = System.Windows.MessageBox.Show(String.Join(Environment.NewLine, "Retry?", 
+                                                                                             "Press No if you don't need Email Noptification", 
+                                                                                             "Authentication error", MessageBoxButton.YesNo, 
+                                                                                             MessageBoxImage.Error));
                         if (result == MessageBoxResult.Yes)
                         {
                             Email = null;
+                            if (Directory.Exists(".credentials")) Directory.Delete(".credentials", true);
                             Email = new Notifiers.EmailNotifier();
                         };
                     }
