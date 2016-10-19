@@ -17,7 +17,7 @@ namespace PersonalScheduler
         Notifiers.SoundNotifier Sound = new Notifiers.SoundNotifier();
         Notifiers.VisualNotifier Visual = new Notifiers.VisualNotifier();
         Notifiers.EmailNotifier Email;
-        private List<ScheduledEvent> Listofevents { get { return listofevents; } set { listofevents = value; listofevents.Sort((x, y) => x.DateTime.CompareTo(y.DateTime)); } }
+        //private List<ScheduledEvent> Listofevents { get { return listofevents; } set { listofevents = value; listofevents.Sort((x, y) => x.DateTime.CompareTo(y.DateTime)); } }
 
 
         public void ProcessEvents()
@@ -79,8 +79,11 @@ namespace PersonalScheduler
                     }
 
                 }
-
-                Listofevents.Add(ev);
+                int index = listofevents.FindIndex(e => e.DateTime > ev.DateTime);
+                if (index>=0)
+                    listofevents.Insert(index, ev);
+                else
+                    listofevents.Add(ev);
                 OnEventAdded?.Invoke(ev);
 
             }
