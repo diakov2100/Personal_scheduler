@@ -61,11 +61,11 @@ namespace PersonalScheduler.Notifiers
         public void Notify(ScheduledEvent ev)
         {
             string text = String.Join(Environment.NewLine, "It's time for " + ev.Name);
-            if (ev.Description != null)
+            if (ev.Description != "")
             {
                 text = String.Join(Environment.NewLine, text, "Description:", ev.Description);
             }
-            if (ev.Description != null)
+            if (ev.Place != "")
             {
                 text = String.Join(Environment.NewLine, text, "Place:", ev.Place);
             }
