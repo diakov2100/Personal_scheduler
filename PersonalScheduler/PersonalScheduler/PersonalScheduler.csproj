@@ -105,6 +105,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="NotiFactory.cs" />
     <Compile Include="Notifiers\EmailNotifier.cs" />
     <Compile Include="RegularEvent.cs" />
     <Compile Include="VisualNotifierWindow.xaml.cs">

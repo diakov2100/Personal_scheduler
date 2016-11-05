@@ -7,8 +7,7 @@ namespace PersonalScheduler.Notifiers
 		public void Notify(ScheduledEvent ev)
 		{
             VisualNotifierWindow notifierWindow = new VisualNotifierWindow(ev);
-            notifierWindow.ShowDialog();
-
+            notifierWindow.Show();
         }
 	}
 }

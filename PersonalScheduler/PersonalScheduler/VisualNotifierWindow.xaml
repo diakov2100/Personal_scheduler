@@ -5,15 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PersonalScheduler"
         mc:Ignorable="d"
-        Title="Notification" Height="180" Width="265.333" ResizeMode="NoResize" Icon="Icons/notification.png">
+        Title="Notification" Height="180" Width="254.482" ResizeMode="NoResize" Icon="Icons/notification.png">
     <Grid>
-        <TextBox x:Name="EventDescription" Margin="10,0,4,4" IsReadOnly="True" Height="52" VerticalAlignment="Bottom" />
+        <TextBox x:Name="EventDescription" Margin="4,0,4,4" IsReadOnly="True" Height="52" VerticalAlignment="Bottom" />
         <Image x:Name="image" Source="Icons/notification.png" Height="75" VerticalAlignment="Top" Margin="4,4,0,0" HorizontalAlignment="Left" Width="77"/>
         <Label x:Name="NameLabel" Content="Name" Margin="90,10,0,0" Height="26" VerticalAlignment="Top" HorizontalAlignment="Left" Width="42"/>
         <Label x:Name="PlaceLabel" Content="Place" Margin="90,35,0,0" Height="26" VerticalAlignment="Top" HorizontalAlignment="Left" Width="42"/>
         <TextBox x:Name="EventName" Margin="135,10,4,0" TextWrapping="Wrap" VerticalContentAlignment="Center" IsReadOnly="True" Height="25" VerticalAlignment="Top"/>
         <TextBox x:Name="EventPlace" Margin="135,35,4,0" TextWrapping="Wrap" VerticalContentAlignment="Center" IsReadOnly="True" Height="26" VerticalAlignment="Top"/>
-        <Label x:Name="Description" Content="Description" Margin="87,0,87,47" HorizontalContentAlignment="Center" Height="34" VerticalAlignment="Bottom"/>
+        <Label x:Name="Description" Content="Description" Margin="83,0,82,47" HorizontalContentAlignment="Center" Height="34" VerticalAlignment="Bottom"/>
 
     </Grid>
 </Window>

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using PersonalScheduler.Notifiers;
 
 
 namespace PersonalScheduler
@@ -14,41 +15,42 @@ namespace PersonalScheduler
         public event Action<ScheduledEvent> OnEventAdded;
         public event Action<ScheduledEvent> OnEventRemoved;
         List<ScheduledEvent> listofevents = new List<ScheduledEvent>();
-        Notifiers.SoundNotifier Sound = new Notifiers.SoundNotifier();
-        Notifiers.VisualNotifier Visual = new Notifiers.VisualNotifier();
-        Notifiers.EmailNotifier Email;
-        //private List<ScheduledEvent> Listofevents { get { return listofevents; } set { listofevents = value; listofevents.Sort((x, y) => x.DateTime.CompareTo(y.DateTime)); } }
-
+        INotifier Sound = NotiFactory.Default.GetSound();
+        INotifier Visual = NotiFactory.Default.GetVisual();
+        INotifier Email;
 
         public void ProcessEvents()
         {
             while ((listofevents.Count != 0) && (listofevents[0].DateTime <= DateTime.Now))
             {
-                foreach (var Notification in listofevents[0].Notifications)
-                {
-                    if ((Notification == NotificationType.Email) && (Email != null))
-                    {
-                        Email.Notify(listofevents[0]);
-                    }
-                    if (Notification == NotificationType.Sound)
-                    {
-                        Sound.Notify(listofevents[0]);
-                    }
-                    if (Notification == NotificationType.Visual)
-                    {
-                        Visual.Notify(listofevents[0]);
-                    }
-                }
+                var tecev = listofevents[0];
                 if (listofevents[0] is RegularEvent)
                 {
                     var ev = listofevents[0] as RegularEvent;
+
                     RemoveEvent(listofevents[0]);
-                    AddEvent(new ScheduledEvent(ev.Name, ev.DateTime + ev.RepeatInterval, ev.Place, ev.Description, ev.Notifications));
+                    AddEvent(new RegularEvent(ev.RepeatInterval, ev.Name, ev.DateTime + ev.RepeatInterval, ev.Place, ev.Description, ev.Notifications));
                 }
                 else
                 {
                     RemoveEvent(listofevents[0]);
                 }
+                foreach (var Notification in tecev.Notifications)
+                {
+                    if ((Notification == NotificationType.Email) && (Email != null))
+                    {
+                        Email.Notify(tecev);
+                    }
+                    if (Notification == NotificationType.Sound)
+                    {
+                        Sound.Notify(tecev);
+                    }
+                    if (Notification == NotificationType.Visual)
+                    {
+                        Visual.Notify(tecev);
+                    }
+                }
+
             }
 
         }
@@ -62,7 +64,7 @@ namespace PersonalScheduler
 
                     try
                     {
-                        Email = new Notifiers.EmailNotifier();
+                        Email = NotiFactory.Default.GetEmail();
                     }
                     catch
                     {
@@ -74,7 +76,7 @@ namespace PersonalScheduler
                         {
                             Email = null;
                             if (Directory.Exists(".credentials")) Directory.Delete(".credentials", true);
-                            Email = new Notifiers.EmailNotifier();
+                            Email = NotiFactory.Default.GetEmail();
                         };
                     }
 
